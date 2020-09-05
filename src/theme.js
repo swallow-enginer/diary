@@ -6,9 +6,12 @@ const theme = createMuiTheme({
   overrides: {
     MuiPickersBasePicker: {
       container: {
-        margin: "0 auto",
-      },
+        margin: "0 auto"
+      }
     },
+    MuiFormControl: {
+      root: {verticalAlign:"baseline"}
+    }
   },
   palette: {
     primary: {

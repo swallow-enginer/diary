@@ -10,8 +10,20 @@ import Avatar from '@material-ui/core/Avatar';
 import AddIcon from '@material-ui/icons/Add';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+    category: {
+        minWidth: '150px'
+    },
+    root: {
+        verticalAlign: "baseline"
+    }
+  });
 
 export default function CategorySelect(props) {
+    const classes = useStyles();
+
     const [open, setOpen] = React.useState(false);
     const [category, setCategory] = React.useState(10);
 
@@ -61,7 +73,10 @@ export default function CategorySelect(props) {
 
     return (
         <>
-        <FormControl>
+        <FormControl 
+            className={classes.category}
+            classes={{root:classes.root}}
+        >
         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
         カテゴリー
         </InputLabel>

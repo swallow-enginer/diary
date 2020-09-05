@@ -1,48 +1,88 @@
 import 'date-fns';
-import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import CategorySelect  from "../src/comp/CategorySelect.js";
 import Memo  from "../src/comp/Memo.js";
 import {KeyboardDatePicker} from '@material-ui/pickers';
 import  DiaryAppBar  from "../src/comp/DiaryAppBar.js";
+import { useRouter } from 'next/router';
+import React, { useState} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { spacing } from '@material-ui/system';
+import DiaryConst from "../src/util/DiaryConst.js";
+
+
+// export const RegisterContext = createContext();
+// const registerData = new Map();
+// registerData.set(DiaryConst.REGISTER_DATA_DATE, "");
+// registerData.set(DiaryConst.REGISTER_DATA_MEMO, "");
+// registerData.set(DiaryConst.REGISTER_DATA_CATEGORY, "");
+
+
+const useStyles = makeStyles({
+  gridList: {
+    marginLeft: '10px',
+    marginRight: '10px'
+  },
+  grid: {
+    marginBottom: '10px'
+  },
+  cell: {
+    marginRight: '10px'
+  }
+});
+
 
 export default function MaterialUIPickers() {
-  // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date('2020-08-31'));
-  
+  const router = useRouter();
+  const query = router.query;
+  const [selectedDate, setSelectedDate] = useState(
+                                              query.date == null
+                                              ? "2020/09/10"
+                                              :new Date(query.date));
+
+  const classes = useStyles();
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
   return (
       <>
-      <DiaryAppBar screen="register"/>
-      <GridList
-        cellHeight="auto">
-        <Grid item xs={3} container justify="space-around" alignItems="center">
-            <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="yyyy/MM/dd"
-                margin="normal"
-                id="date-picker-inline"
-                label="日付"
-                value={selectedDate}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                }}
-            />
+        <DiaryAppBar screen={DiaryConst.REGISTER_SCREEN}/>
+        <Grid 
+          container
+          justify="flex-start"
+          alignItems="flex-end"
+          className={classes.gridList}>
+          <Grid
+            item
+            className={classes.grid}
+            >
+              <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="yyyy/MM/dd"
+                  margin="normal"
+                  id="date-picker-inline"
+                  label="日付"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  className={classes.cell}
+                  KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                  }}
+              />
+              <CategorySelect />
+          </Grid>
+          {/* <Grid item xs={12} className={classes.grid}>
+              
+          </Grid> */}
+
+          <Grid item xs={12} className={classes.grid}>
+              <Memo />
+          </Grid>
         </Grid>
-        <Grid item xs={3} container justify="flex-start" alignItems="center">
-            <CategorySelect />
-        </Grid>
-        <Grid item xs={12} >
-            <Memo />
-        </Grid>
-      </GridList>
-      
       </>
   );
 }

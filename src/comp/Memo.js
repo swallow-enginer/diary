@@ -14,7 +14,7 @@ export default function MultilineTextFields() {
         <TextField
           id="memo"
           label="メモ"
-          fullWidth="true"
+          fullWidth
           multiline
           rows={20}
         //   rowsMax={20}
