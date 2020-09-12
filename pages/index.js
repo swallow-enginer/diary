@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import  Schedule  from "../src/comp/Schedule.js";
-import  FloatingActionButtons  from "../src/comp/FloatingActionButtons.js";
-import  DiaryAppBar  from "../src/comp/DiaryAppBar.js";
-import DiaryConst from "../src/util/DiaryConst.js";
+import { useRouter } from 'next/router';
+import Button from '@material-ui/core/Button';
 
-const StaticDatePicker = () => {
-  const [date, changeDate] = useState(new Date());
+const index = () => {
+  const router = useRouter();
+
+  const onLogin = () => {
+    router.push("/api/login/login");
+  }
 
   return (
     <>
-      <DiaryAppBar screen={DiaryConst.HOME_SCREEN}/>
-      <Schedule/>
+      <Button
+        variant="contained" color="primary"
+        onClick={onLogin}
+      >ログイン</Button>
     </>
   );
 };
 
-export default StaticDatePicker;
+export default index;

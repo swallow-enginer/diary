@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import React, { useState, createContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DiaryConst from "../src/util/DiaryConst.js";
-import Util from "../src/util/Util.js";
+import Box from '@material-ui/core/Box';
 
 export const RegisterContext = createContext();
 
@@ -20,8 +20,8 @@ const useStyles = makeStyles({
   grid: {
     marginBottom: '10px'
   },
-  cell: {
-    marginRight: '10px'
+  date: {
+    width: '100px'
   }
 });
 
@@ -29,11 +29,11 @@ const useStyles = makeStyles({
 const MaterialUIPickers = () => {
   const router = useRouter();
   const query = router.query;
-  const getDate = () => {return query.date === null ? Util.getToday("YYYY/MM/DD") : query.date}
-  const [registerData, setRegisterData] = useState({
-    [DiaryConst.REGISTER_DATA.DATE]     :  getDate(),
-    [DiaryConst.REGISTER_DATA.MEMO]     :  "",
-    [DiaryConst.REGISTER_DATA.CATEGORY] :  ""
+  const [searchData, setSearchData] = useState({
+    [DiaryConst.SEARH_DATA.DATE_FROM]   :  "",
+    [DiaryConst.SEARH_DATA.DATE_TO]     :  "",
+    [DiaryConst.SEARH_DATA.CATEGORY]     :  "",
+    [DiaryConst.SEARH_DATA.KEYWORD]     :  "",
   });
 
   const classes = useStyles();
@@ -59,6 +59,27 @@ const MaterialUIPickers = () => {
     setRegisterData(registerData);
   };
 
+  const getDatePicker = (props) => (
+      <DatePicker
+        {...props}
+        className={classes.date}
+        clearable
+        autoOk
+        // variant="inline"
+        format="yyyy/MM/dd"
+        margin="normal"
+        value={registerData.[DiaryConst.REGISTER_DATA.DATE]}
+        onChange={onChangeDate}
+      />
+  )
+  
+  const DateFromProps =
+    {
+      label : "登録日(開始)",
+      value : searchData.[DiaryConst.SEARH_DATA.DATE_FROM],
+      onChange : onChangeDateFrom(DiaryConst.SEARH_DATA.DATE_FROM)
+    }
+
   return (
       <RegisterContext.Provider value={registerData}>
         <DiaryAppBar 
@@ -74,20 +95,19 @@ const MaterialUIPickers = () => {
             item
             className={classes.grid}
             >
-              <DatePicker
-                  disableToolbar
-                  autoOk
-                  variant="inline"
-                  format="yyyy/MM/dd"
-                  margin="normal"
-                  label="日付"
-                  value={registerData.[DiaryConst.REGISTER_DATA.DATE]}
-                  onChange={onChangeDate}
-                  className={classes.cell}
-              />
-              <CategorySelect 
-                onChange={onChangeCategory}
-              />
+              {getDatePicker(DateFromProps)}
+              <Box component="span" m={1}>
+                <span>～</span>
+              </Box>
+              {getDatePicker(DateToProps)}
+          </Grid>
+          <Grid
+            item
+            className={classes.grid}
+            >
+            <CategorySelect 
+                  onChange={onChangeCategory}
+                />
           </Grid>
 
           <Grid item xs={12} className={classes.grid}>

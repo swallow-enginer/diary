@@ -39,12 +39,13 @@ export default function CategorySelect(props) {
         setOpen(false);
     }
 
-    const changeCategory = (event) => {
-        const val = event.target.value;
+    const onChangeCategory = (e) => {
+        const val = e.target.value;
+        props.onChange(val);
         if (val === ADD_CATEGORY) {
             openDialog();
         } else {
-            setCategory(event.target.value);
+            setCategory(val);
         }
     };
     const getCategoryList = () => {
@@ -84,7 +85,7 @@ export default function CategorySelect(props) {
             labelId="category-select-label"
             id="category-select"
             value={category}
-            onChange={changeCategory}
+            onChange={onChangeCategory}
             autoWidth
         >
             <MenuItem value={10}>メモああああ</MenuItem>

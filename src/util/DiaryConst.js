@@ -2,37 +2,67 @@ class DiaryConst {
   /**
    * ホーム画面
    */
-  static get HOME_SCREEN() {
-      return 0;
+
+  static get SCREEN() {
+    return {
+      HOME     : 0,
+      REGISTER : 1
+    }
   }
 
-  /**
-   * 登録画面
-   */
-  static get REGISTER_SCREEN() {
-    return 1;
+  static get URL() {
+    return {
+      HOME      : "/home",
+      REGISTER  : "/register",
+      PROFILE   : "/profile",
+      CATEGORY  : "/category",
+      SEARCH    : "/search",
+      SETTING   : "/setting",
+    }
   }
 
-  static get HOME_URL() {
-    return "/";
+  static get REGISTER_DATA() {
+    return {
+      DATE     : "date",
+      MEMO     : "memo",
+      CATEGORY : "category"
+    }
   }
 
-  static get REGISTER_URL() {
-    return "/register";
+  static get SEARCH_DATA() {
+    return {
+      DATE_FROM  : "date_from",
+      DATE_TO    : "date_to",
+      KEYWORD    : "keyword",
+      CATEGORY   : "category"
+    }
   }
 
-  static REGISTER_DATA_DATA = "aa";
-
-  static get REGISTER_DATA_DATE() {
-    return "date";
+  static get CATEGORY_DEFAULT() {
+    return {
+      KEY   : 0,
+      VALUE : "メモ"
+    }
   }
 
-  static get REGISTER_DATA_MEMO() {
-    return "memo";
+  static get SCREEN_TITLE() {
+    return {
+      REGISTER : "メモ登録",
+      CALENDAR : "カレンダー"
+    }
   }
-
-  static get REGISTER_DATA_CATEGORY() {
-    return "category";
+  static get BUTTON_TITLE() {
+    return {
+      REGISTER : "登録"
+    }
+  }
+  static get HTTP_METHOD() {
+    return {
+      GET     : "GET",
+      POST    : "POST",
+      PUT     : "PUT",
+      DELETE  : "DELETE",
+    }
   }
 }
 

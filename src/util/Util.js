@@ -9,6 +9,23 @@ class Util {
     format = format.replace(/SS/g, (date.getMilliseconds()));
     return format;
   };
+
+  static getToday = (format) => {
+    return this.formatDate(new Date(), format);
+  }
+
+  /**
+   * マップからリストにあるキーを取り出しマップを返す
+   */
+  static getMapByList = (map, list) => {
+    let result = new Map();
+    for (var key of list) {
+      if (map[key]) {
+        result[key] = map[key];
+      }
+    }
+    return result;
+  }
 }
 
 export default Util;

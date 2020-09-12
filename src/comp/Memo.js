@@ -2,12 +2,8 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 
-export default function MultilineTextFields() {
-  const [value, setValue] = React.useState("");
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+export default function MultilineTextFields(props) {
+  const [value] = React.useState();
 
   return (
     <>
@@ -19,7 +15,7 @@ export default function MultilineTextFields() {
           rows={20}
         //   rowsMax={20}
           type="input"
-          onChange={handleChange}
+          onChange={props.onChange}
           value={value}
           variant="outlined"
         />
