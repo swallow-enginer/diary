@@ -26,6 +26,14 @@ class Util {
     }
     return result;
   }
+  
+  /**
+   * ユーザー情報をセットする
+   * @param {object} user ユーザー情報
+   */
+  static setUser = (user) => {
+
+  }
 }
 
 export default Util;

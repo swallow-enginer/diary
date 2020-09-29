@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
  * DB接続設定を定義
  */
 const dbConfig = new Sequelize(
-        'postgres',      //DB名
-        'postgres',      //ユーザー名
-        'postgres',      //パスワード
+        process.env.DIARY_DB_HOST,      //DB名
+        process.env.DIARY_DB_USER,      //ユーザー名
+        process.env.DIARY_DB_PASSWORD,  //パスワード
         {               //オプション
             // 接続先ホストを指定
             host: 'localhost',

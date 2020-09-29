@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import DiaryConst from "../util/DiaryConst.js"
 
 export async function fetchUser(cookie = '') {
   if (typeof window !== 'undefined' && window.__user) {
@@ -6,7 +7,7 @@ export async function fetchUser(cookie = '') {
   }
 
   const res = await fetch(
-    '/api/login/me',
+    DiaryConst.URL.LOGIN_ME,
     cookie
       ? {
           headers: {
@@ -53,7 +54,7 @@ export function useFetchUser({ required } = {}) {
         if (isMounted) {
           // When the user is not logged in but login is required
           if (required && !user) {
-            window.location.href = '/api/login/login'
+            window.location.href = DiaryConst.URL.API_LOGIN
             return
           }
           setUser(user)

@@ -12,9 +12,14 @@ const userModel = DbConfig.define('user', {
   },
   user_nm: {
     type: Sequelize.STRING,
-    allowNull:false,
+    allowNull:true,
     comment: "ユーザー名",
   },
+  sub_id: {
+    type: Sequelize.STRING,
+    unique: true,
+    comment: "サブID(Auth0で一意のキー)",
+  }
 });
 
 userModel.sync();

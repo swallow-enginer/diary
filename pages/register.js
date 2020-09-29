@@ -1,4 +1,3 @@
-import 'date-fns';
 import Grid from '@material-ui/core/Grid';
 import CategorySelect  from "../src/comp/CategorySelect.js";
 import Memo  from "../src/comp/Memo.js";
@@ -9,6 +8,7 @@ import React, { useState, createContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DiaryConst from "../src/util/DiaryConst.js";
 import Util from "../src/util/Util.js";
+import withAuth from '../src/comp/with-auth';
 
 export const RegisterContext = createContext();
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 });
 
 
-const MaterialUIPickers = () => {
+const register = () => {
   const router = useRouter();
   const query = router.query;
   const getDate = () => {return query.date === null ? Util.getToday("YYYY/MM/DD") : query.date}
@@ -99,4 +99,4 @@ const MaterialUIPickers = () => {
       </RegisterContext.Provider>
   );
 }
-export default MaterialUIPickers;
+export default withAuth(register);

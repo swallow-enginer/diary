@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import  Schedule  from "../src/comp/Schedule.js";
 import  DiaryAppBar  from "../src/comp/DiaryAppBar.js";
 import DiaryConst from "../src/util/DiaryConst.js";
+import withAuth from '../src/comp/with-auth';
 
-const home = () => {
+const home = ({user}) => {
+
+  useEffect(async () => {
+    const res = await fetch('/api/memo', {method:"GET"})
+    await res.json()
+  });
+
 
   return (
     <>
@@ -13,4 +20,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default withAuth(home);

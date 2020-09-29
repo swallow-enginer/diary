@@ -12,7 +12,9 @@ import { useRouter } from 'next/router';
 import Util from "../util/Util.js";
 import DiaryConst from "../util/DiaryConst.js";
 
-const Schedule = () => {
+
+
+const Schedule = ({schedule}) => {
   const [currentDate, setCurrentDate] = useState(Util.getToday("YYYY/MM/DD"));
 
   const TimeTableCell = ({...restProps}) => {

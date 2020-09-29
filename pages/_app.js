@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -8,6 +8,11 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import jaLocale from "date-fns/locale/ja";
 import format from "date-fns/format";
+import { useRadioGroup } from '@material-ui/core';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from "../src/redux/reducer.js";
+
 
 
 class ExtendedUtils extends DateFnsUtils {
@@ -15,12 +20,13 @@ class ExtendedUtils extends DateFnsUtils {
     return format(date, "yyyy MMM", { locale: this.locale });
   }
   getDatePickerHeaderText(date) {
-    return format(date, "MMMd日", { locale: this.locale });
+    return format(date, "MMdd日", { locale: this.locale });
   }
 }
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const store = createStore(reducer);
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -29,6 +35,24 @@ export default function MyApp(props) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+  // storeが管理するstateを props として受け取るための変換函数
+  // function mapStateToProps(state, props) {
+  //   return state
+  // }
+
+  // // 各コンポーネントのイベントハンドラを一括で作成するものと思えば良い
+  // // これも props に割り当てられる
+  // function mapDispatchToProps(dispatch, props) {
+  //   return {
+  //       setUser: function(n) {
+  //           dispatch(addCounter(n));
+  //       },
+  //   }
+
+  // }
+
+  // Component = connect(mapStateToProps,mapDispatchToProps)(Component);
+  
 
   return (
     <React.Fragment>
@@ -40,7 +64,9 @@ export default function MyApp(props) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
         </ThemeProvider>
       </MuiPickersUtilsProvider>
     </React.Fragment>

@@ -1,9 +1,15 @@
 import Db from '../../src/db/dbConfig';
+import auth0 from '../../src/lib/auth0';
 import MemoModel from '../../src/model/memoModel.js';
 import DiaryConst from '../../src/util/DiaryConst.js';
 import Util from '../../src/util/Util.js';
+import UtilServer from '../../src/util/UtilServer.js';
 
-export default (req, res) => {
+let user;
+
+export default auth0.requireAuthentication(async (req, res) => {
+    const session = await auth0.getSession(req);
+    user = await session.user;
     if (req.method === DiaryConst.HTTP_METHOD.GET) {
         getMemo(req, res);
     } else if (req.method === DiaryConst.HTTP_METHOD.POST) {
@@ -13,13 +19,13 @@ export default (req, res) => {
     } else if (req.method === DiaryConst.HTTP_METHOD.DELETE) {
         deleteMemo(req, res);
     }
-}
+});
 
 //取得
 const getMemo = (req, res) => {
-    MemoModel
+    MemoModel   
     .findAll({
-        where:{user_id : req.query.user_id}
+        where:{user_id : user.user_id}
     })
     .then(function(memo) {
         res.json(memo);
